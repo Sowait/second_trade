@@ -1,0 +1,223 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #FF4D8D;
+  --color-secondary: #7C3AED;
+  --color-success: #22C55E;
+  --color-warning: #F59E0B;
+  --color-danger: #FF3B30;
+
+  --color-dark: #0F172A;
+  --color-dark-2: #334155;
+
+  --color-light-1: #94A3B8;
+  --color-light-2: #E5E7EB;
+  --color-light-3: #F8FAFC;
+
+  --color-credit-high: #22C55E;
+  --color-credit-medium: #F59E0B;
+
+  --font-inter: Inter, system-ui, sans-serif;
+}
+
+
+/*
+  Global custom utilities + animations migrated from a.html
+  Keep these here so SFC-split pages keep identical shadows/animations.
+*/
+
+@layer utilities {
+  .content-auto {
+    content-visibility: auto;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.4s ease-out;
+  }
+
+  .animate-number-scroll {
+    animation: numberScroll 1.5s ease-out forwards;
+  }
+
+  .wizard-step-active .step-number {
+    @apply bg-primary text-white border-primary;
+  }
+
+  .wizard-step-active .step-line {
+    @apply bg-primary;
+  }
+
+  .wizard-step-completed .step-number {
+    @apply bg-primary text-white border-primary;
+  }
+
+  .wizard-step-completed .step-line {
+    @apply bg-primary;
+  }
+
+  .wizard-step-completed .step-icon {
+    @apply opacity-100;
+  }
+
+  .wizard-step-completed .step-text {
+    @apply text-primary;
+  }
+
+  .tab-active {
+    @apply text-primary border-primary;
+  }
+
+  .shadow-card {
+    box-shadow: var(--app-shadow-md);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes numberScroll {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== App Global Background & Design Tokens ===== */
+:root {
+  --app-bg-image: radial-gradient(12px 12px at 20px 20px, rgba(255, 77, 141, 0.22) 0 8px, transparent 9px),
+    radial-gradient(12px 12px at 80px 70px, rgba(124, 58, 237, 0.18) 0 8px, transparent 9px),
+    radial-gradient(12px 12px at 140px 30px, rgba(34, 197, 94, 0.16) 0 8px, transparent 9px),
+    radial-gradient(900px circle at 18% 12%, rgba(255, 77, 141, 0.18), transparent 55%),
+    radial-gradient(1000px circle at 78% 20%, rgba(124, 58, 237, 0.14), transparent 55%),
+    linear-gradient(180deg, #fff7fb 0%, #f5f3ff 100%);
+  --app-bg-tint: transparent;
+  --app-surface: rgba(255, 255, 255, 0.96);
+  --app-surface-2: rgba(255, 255, 255, 0.92);
+  --app-border: rgba(15, 23, 42, 0.14);
+
+  --app-radius-sm: 16px;
+  --app-radius-md: 20px;
+  --app-radius-lg: 28px;
+
+  --app-shadow-sm: 3px 3px 0 rgba(15, 23, 42, 0.10);
+  --app-shadow-md: 7px 7px 0 rgba(15, 23, 42, 0.12);
+  --app-shadow-lg: 12px 12px 0 rgba(15, 23, 42, 0.14);
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  background: transparent;
+  font-family: var(--font-inter);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Global background */
+.app-root {
+  position: relative;
+  min-height: 100vh;
+  background-image: var(--app-bg-image);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.app-root::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--app-bg-tint);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.app-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  overflow: visible;
+  padding: 18px;
+  gap: 18px;
+}
+
+.app-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.app-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 18px;
+  background: transparent;
+}
+
+/* Reusable surfaces */
+.app-surface {
+  background: var(--app-surface);
+  border: 2px solid var(--app-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-md);
+}
+
+.app-surface-2 {
+  background: var(--app-surface-2);
+  border: 2px solid var(--app-border);
+  border-radius: var(--app-radius-md);
+  box-shadow: var(--app-shadow-sm);
+}
+
+.card {
+  background: var(--app-surface);
+  border: 2px solid var(--app-border);
+  border-radius: var(--app-radius-lg);
+  box-shadow: var(--app-shadow-md);
+}

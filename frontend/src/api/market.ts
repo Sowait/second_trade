@@ -1,0 +1,238 @@
+// frontend/src/api/market.ts
+import http from "./http";
+
+export type DraftInitReq = {
+  category_id: number;
+  device_model_id: number;
+  years_used: number;
+  original_price: number;
+};
+
+export type DraftInitResp = {
+  draft_key: string;
+  meta?: DraftInitReq & Record<string, any>;
+};
+
+export type AnalyzeResp = {
+  main_image: string;
+  grade_label: string;
+  grade_score: number;
+  defects: string[];
+};
+
+export type PublishReq = {
+  // step1
+  category_id: number;
+  device_model_id: number;
+  years_used: number;
+  original_price: number | string;
+
+  // step3
+  title: string;
+  school?: string;
+  product_summary: string;
+  description: string;
+  selling_price: number | string;
+};
+
+export async function initDraft(payload: DraftInitReq): Promise<DraftInitResp> {
+  // 注意：你后端现在是 /api/market/drafts/init/（带斜杠）
+  const res = await http.post("/api/market/drafts/init/", payload);
+  return res.data;
+}
+
+export async function uploadDraftImage(draftKey: string, file: File): Promise<any> {
+  const form = new FormData();
+  // 字段名必须叫 image（和你 curl 一致）
+  form.append("image", file);
+
+  const res = await http.post(`/api/market/drafts/${draftKey}/images/`, form);
+  return res.data;
+}
+
+// 批量上传（最多4张），按顺序逐张上传；第1张会成为主图
+export async function uploadDraftImages(draftKey: string, files: File[]): Promise<any[]> {
+  const list = Array.isArray(files) ? files.slice(0, 4) : [];
+  const results: any[] = [];
+
+  for (const f of list) {
+    const r = await uploadDraftImage(draftKey, f);
+    results.push(r);
+  }
+
+  return results;
+}
+
+export async function analyzeDraft(draftKey: string): Promise<AnalyzeResp> {
+  const res = await http.post(`/api/market/drafts/${draftKey}/analyze/`);
+  return res.data;
+}
+
+export type EstimateReq = {
+  category_id: number;
+  years_used: number;
+  original_price: number | string;
+  grade_label?: string;
+  defects?: string[];
+};
+
+export async function estimateDraft(draftKey: string, payload: EstimateReq): Promise<any> {
+  const res = await http.post(`/api/market/drafts/${draftKey}/estimate/`, payload);
+  return res.data;
+}
+
+export async function publishDraft(draftKey: string, payload: PublishReq): Promise<any> {
+  const res = await http.post(`/api/market/drafts/${draftKey}/publish/`, payload);
+  return res.data;
+}
+
+export type DraftInitFromProductResp = {
+  draft_key: string;
+  meta?: DraftInitReq & Record<string, any>;
+  product?: Record<string, any>;
+  images?: string[];
+};
+
+export async function initDraftFromProduct(productId: number): Promise<DraftInitFromProductResp> {
+  const res = await http.post(`/api/market/drafts/init_from_product/${productId}/`);
+  return res.data;
+}
+
+export async function publishDraftUpdateProduct(draftKey: string, productId: number, payload: PublishReq): Promise<any> {
+  const res = await http.post(`/api/market/drafts/${draftKey}/publish_update/${productId}/`, payload);
+  return res.data;
+}
+
+// -------------------------
+// Orders (purchase flow)
+// -------------------------
+
+export type CreateTradeReq = {
+  product_id: number;
+};
+
+export type CreateTradeResp = {
+  order_id: number;
+  order_no: string;
+  status: string;
+  product_id: number;
+};
+
+export async function createTrade(payload: CreateTradeReq): Promise<CreateTradeResp> {
+  const res = await http.post("/api/market/orders/create_trade/", payload);
+  return res.data;
+}
+
+export type OrderActionResp = {
+  order_id: number;
+  status: string;
+};
+
+export async function payOrder(orderId: number, payload?: { pickup?: boolean }): Promise<OrderActionResp> {
+  const res = await http.post(`/api/market/orders/${orderId}/pay/`, payload ?? {});
+  return res.data;
+}
+
+export async function cancelPayment(orderId: number): Promise<OrderActionResp> {
+  const res = await http.post(`/api/market/orders/${orderId}/cancel_payment/`);
+  return res.data;
+}
+
+export async function shipOrder(orderId: number): Promise<OrderActionResp> {
+  const res = await http.post(`/api/market/orders/${orderId}/ship/`);
+  return res.data;
+}
+
+export async function confirmReceipt(orderId: number): Promise<OrderActionResp> {
+  const res = await http.post(`/api/market/orders/${orderId}/confirm_receipt/`);
+  return res.data;
+}
+
+export async function refundOrder(orderId: number): Promise<OrderActionResp> {
+  const res = await http.post(`/api/market/orders/${orderId}/refund/`);
+  return res.data;
+}
+
+export type OrderListItem = {
+  id: number;
+  order_no: string;
+  status: string;
+  buyer_id?: number;
+  seller_id?: number;
+  product_id: number;
+  product_title?: string;
+  product_main_image?: string;
+  product_selling_price?: string | number;
+  created_at?: string;
+};
+
+export async function listBuyerOrders(): Promise<OrderListItem[]> {
+  const res = await http.get("/api/market/orders/buy/");
+  return res.data;
+}
+
+export async function listSellerOrders(): Promise<OrderListItem[]> {
+  const res = await http.get("/api/market/orders/sell/");
+  return res.data;
+}
+
+export async function getOrderDetail(orderId: number): Promise<OrderListItem> {
+  const res = await http.get(`/api/market/orders/${orderId}/`);
+  return res.data;
+}
+
+// -------------------------
+// Products (detail)
+// -------------------------
+
+export type ProductDetail = any;
+
+export async function getProductDetail(productId: number): Promise<ProductDetail> {
+  const res = await http.get(`/api/market/products/${productId}/`);
+  return res.data;
+}
+
+// -------------------------
+// Device Models (reference)
+// -------------------------
+
+export type DeviceModelReferenceItem = {
+  id: number;
+  name: string;
+  brand_id: number;
+  brand_name?: string;
+  image_url?: string | null;
+  msrp_price?: string | number | null;
+  index_type?: string;
+};
+
+export async function getDeviceModelReference(params: {
+  category_id: number;
+  device_model_id: number;
+}): Promise<DeviceModelReferenceItem | null> {
+  const res = await http.get("/api/market/device-models/reference/", { params });
+  // 后端可能返回对象或列表；这里做兼容
+  const data = res.data;
+  if (!data) return null;
+  if (Array.isArray(data)) return (data[0] ?? null) as DeviceModelReferenceItem | null;
+  return data as DeviceModelReferenceItem;
+}
+
+// -------------------------
+// Brands
+// -------------------------
+
+export type BrandItem = {
+  id: number;
+  name: string;
+  category_id?: number;
+};
+
+export async function listBrands(categoryId?: number): Promise<BrandItem[]> {
+  const params: any = {};
+  if (categoryId) {
+    params.category_id = categoryId;
+  }
+  const res = await http.get("/api/market/brands/", { params });
+  return res.data;
+}

@@ -1,0 +1,13 @@
+.DS_Store
+.idea/
+*.iml
+*.log
+
+node_modules/
+frontend/dist/
+frontend/.vite/
+
+backend/target/
+
+uploads/
+

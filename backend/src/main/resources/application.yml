@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/second_trade?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-    username: root
-    password: 12345678
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:second_trade}?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:12345678}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQL8Dialect
@@ -21,9 +21,9 @@ spring:
 
 app:
   jwt:
-    secret: second-trade-dev-secret
+    secret: ${JWT_SECRET:second-trade-dev-secret}
     access-ttl-seconds: 86400
     refresh-ttl-seconds: 2592000
   upload:
     base-dir: ./uploads
-  seed: true
+  seed: ${APP_SEED:true}

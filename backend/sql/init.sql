@@ -178,7 +178,7 @@ CREATE TABLE IF NOT EXISTS `market_product_comments` (
 -- 默认数据（可重复执行）mockuser
 -- -------------------------
 -- 管理员： admin / admin123
--- 普通用户： mockuser / 123456
+-- 普通用户： 20240001 / 123456
 
 INSERT IGNORE INTO `users`
 (`id`, `student_id`, `username`, `password_hash`, `role`, `nickname`, `email`, `phone`, `school`, `avatar`, `address`, `credit_score`, `is_disabled`, `is_superuser`, `is_staff`, `created_at`)

@@ -17,6 +17,8 @@
 cd backend
 mvn -DskipTests spring-boot:run
 ```
+## docker启动方式
+- 根目录运行： docker compose up --build -d
 
 ## 初始化
 ### 方式 A：使用 SQL 脚本初始化库表

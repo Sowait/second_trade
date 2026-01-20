@@ -1,4 +1,6 @@
-FROM node:20-alpine AS build
+ARG NODE_BUILD_IMAGE=node:20-alpine
+ARG NODE_RUNTIME_IMAGE=node:20-alpine
+FROM ${NODE_BUILD_IMAGE} AS build
 
 WORKDIR /app
 
@@ -12,7 +14,7 @@ ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 
 RUN npm run build
 
-FROM node:20-alpine
+FROM ${NODE_RUNTIME_IMAGE}
 
 WORKDIR /app
 

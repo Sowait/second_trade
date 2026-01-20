@@ -1,9 +1,20 @@
-FROM eclipse-temurin:8-jre
+ARG BUILD_IMAGE=maven:3.8.6-openjdk-8
+ARG RUNTIME_IMAGE=eclipse-temurin:8-jre
+FROM ${BUILD_IMAGE} AS build
 
 WORKDIR /app
 
-ARG JAR_FILE=target/backend-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} /app/app.jar
+COPY pom.xml ./
+RUN mvn -q -DskipTests dependency:go-offline
+
+COPY src ./src
+RUN mvn -q -DskipTests package
+
+FROM ${RUNTIME_IMAGE} AS runtime
+
+WORKDIR /app
+
+COPY --from=build /app/target/*.jar /app/app.jar
 
 EXPOSE 8000
 

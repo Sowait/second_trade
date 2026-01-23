@@ -13,7 +13,7 @@
 
         <form class="space-y-5" @submit.prevent="onSubmit">
           <div class="flex flex-col">
-            <label class="mb-1 font-bold text-dark-2">学号</label>
+            <label class="mb-1 font-bold text-dark-2">学号/社区号</label>
             <input
               v-model="studentId"
               type="text"
@@ -22,7 +22,7 @@
           </div>
 
           <div class="flex flex-col">
-            <label class="mb-1 font-bold text-dark-2">学校</label>
+            <label class="mb-1 font-bold text-dark-2">学校/小区</label>
             <input
               v-model="school"
               type="text"

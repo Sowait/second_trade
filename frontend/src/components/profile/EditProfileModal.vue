@@ -26,12 +26,12 @@
             />
           </FieldRow>
 
-          <FieldRow label="学校">
+          <FieldRow label="学校/小区">
             <input
               v-model.trim="form.school"
               class="w-full px-3 py-2 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#165DFF]/30"
               type="text"
-              placeholder="请输入学校"
+              placeholder="请输入学校/小区"
             />
           </FieldRow>
 

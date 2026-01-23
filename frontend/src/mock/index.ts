@@ -444,7 +444,7 @@ Mock.mock(/\/api\/auth\/register/, 'post', (options: any) => {
       : (body?.username != null ? String(body.username) : '');
   const studentId = studentIdRaw.trim();
   if (!studentId) return { detail: 'student_id required' };
-  if (mockState.authUsersByStudentId[studentId]) return { detail: '学号已注册' };
+  if (mockState.authUsersByStudentId[studentId]) return { detail: '学号/社区号已注册' };
 
   const u: MockAuthUser = {
     id: (mockState.nextAuthUserId += 1),

@@ -857,11 +857,11 @@ watch(
             />
           </div>
           <div>
-            <label class="block text-sm text-gray-600 mb-1">学校 school</label>
+            <label class="block text-sm text-gray-600 mb-1">学校/小区 school</label>
             <input
               v-model="form3.school"
               class="w-full rounded-lg border px-3 py-2 outline-none focus:ring"
-              placeholder="例如：xx大学"
+              placeholder="例如：xx大学/xx小区"
               :disabled="isBusy"
             />
           </div>

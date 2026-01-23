@@ -38,7 +38,7 @@
             <input
               v-model.trim="auditQ"
               class="pl-9 pr-3 py-2 w-64 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#165DFF]/30"
-              placeholder="搜索标题/学校/卖家ID"
+              placeholder="搜索标题/学校/小区/卖家ID"
               type="text"
             />
           </div>
@@ -57,7 +57,7 @@
             <input
               v-model.trim="usersQ"
               class="pl-9 pr-3 py-2 w-64 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#165DFF]/30"
-              placeholder="搜索学号/邮箱/手机号/学校"
+              placeholder="搜索学号/社区号/邮箱/手机号/学校/小区"
               type="text"
             />
           </div>
@@ -130,7 +130,7 @@
         <div class="hidden md:grid grid-cols-12 px-6 py-3 bg-slate-50 border-b border-slate-200 text-sm text-slate-500 font-semibold">
           <div class="col-span-5">商品</div>
           <div class="col-span-2">卖家ID</div>
-          <div class="col-span-2">学校</div>
+          <div class="col-span-2">学校/小区</div>
           <div class="col-span-1">价格</div>
           <div class="col-span-2 text-right">操作</div>
         </div>

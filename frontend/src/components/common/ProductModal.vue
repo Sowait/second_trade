@@ -69,7 +69,7 @@
               </div>
 
               <div v-if="product?.school" class="mt-2 text-sm text-dark-2">
-                学校：<span class="text-dark">{{ product.school }}</span>
+                学校/小区：<span class="text-dark">{{ product.school }}</span>
               </div>
 
               <div v-if="product?.market_tag" class="mt-3 inline-flex items-center px-3 py-1 rounded-full bg-primary/10 text-primary text-sm">

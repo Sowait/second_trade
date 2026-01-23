@@ -65,6 +65,19 @@ function emojiFor(c: Category) {
   const code = normCode(c.code);
   const name = (c.name || "").toLowerCase();
 
+  if (code.includes("bag") || code.includes("bags") || name.includes("箱包")) return "👜";
+  if (code.includes("grain") || code.includes("grains") || name.includes("杂粮")) return "🌾";
+  if (code.includes("wash") || code.includes("washing") || name.includes("洗衣机")) return "🧺";
+  if (code.includes("oven") || name.includes("烤箱")) return "🍞";
+  if (code.includes("clothes") || name.includes("衣服")) return "👕";
+  if (code.includes("snack") || code.includes("snacks") || name.includes("零食")) return "🍪";
+  if (code.includes("kitchen") || code.includes("kitchenware") || name.includes("厨具")) return "🍳";
+  if (code.includes("shoe") || code.includes("shoes") || name.includes("鞋")) return "👟";
+  if (code.includes("alcohol") || code.includes("wine") || name.includes("酒")) return "🍷";
+  if (code.includes("beauty") || name.includes("美妆")) return "💄";
+  if (code.includes("surveillance") || code.includes("monitor") || name.includes("监控")) return "📹";
+  if (code.includes("outdoor") || name.includes("户外")) return "🏕️";
+  if (code.includes("baby") || name.includes("母婴")) return "👶";
   if (code.includes("mobile") || code.includes("phone") || name.includes("手机")) return "📱";
   if (code.includes("laptop") || code.includes("notebook") || name.includes("笔记本") || name.includes("电脑")) return "💻";
   if (code.includes("tablet") || code.includes("pad") || name.includes("平板")) return "📟";
@@ -73,6 +86,12 @@ function emojiFor(c: Category) {
   if (code.includes("audio") || code.includes("headphone") || name.includes("耳机") || name.includes("音箱")) return "🎧";
   if (code.includes("console") || name.includes("游戏") || name.includes("主机")) return "🎮";
   if (code.includes("accessory") || name.includes("配件")) return "🔌";
+  if (code.includes("clean") || code.includes("cleaning") || name.includes("清洁")) return "🧹";
+  if (code.includes("sofa") || name.includes("沙发")) return "🛋️";
+  if (code.includes("bed") || name.includes("床")) return "🛏️";
+  if (code.includes("jewel") || code.includes("jewelry") || name.includes("珠宝")) return "💎";
+  if (code.includes("pet") || code.includes("pets") || name.includes("宠物")) return "🐾";
+  if (code.includes("hardware") || name.includes("五金")) return "🛠️";
   return "🏷️";
 }
 
@@ -80,6 +99,19 @@ function iconClass(c: Category) {
   const code = normCode(c.code);
   const name = (c.name || "").toLowerCase();
 
+  if (code.includes("bag") || code.includes("bags") || name.includes("箱包")) return "fas fa-shopping-bag";
+  if (code.includes("grain") || code.includes("grains") || name.includes("杂粮")) return "fas fa-seedling";
+  if (code.includes("wash") || code.includes("washing") || name.includes("洗衣机")) return "fas fa-water";
+  if (code.includes("oven") || name.includes("烤箱")) return "fas fa-fire";
+  if (code.includes("clothes") || name.includes("衣服")) return "fas fa-tshirt";
+  if (code.includes("snack") || code.includes("snacks") || name.includes("零食")) return "fas fa-cookie-bite";
+  if (code.includes("kitchen") || code.includes("kitchenware") || name.includes("厨具")) return "fas fa-utensils";
+  if (code.includes("shoe") || code.includes("shoes") || name.includes("鞋")) return "fas fa-shoe-prints";
+  if (code.includes("alcohol") || code.includes("wine") || name.includes("酒")) return "fas fa-wine-bottle";
+  if (code.includes("beauty") || name.includes("美妆")) return "fas fa-magic";
+  if (code.includes("surveillance") || code.includes("monitor") || name.includes("监控")) return "fas fa-video";
+  if (code.includes("outdoor") || name.includes("户外")) return "fas fa-campground";
+  if (code.includes("baby") || name.includes("母婴")) return "fas fa-baby";
   if (code.includes("mobile") || code.includes("phone") || name.includes("手机")) return "fas fa-mobile-alt";
   if (code.includes("laptop") || code.includes("notebook") || name.includes("笔记本") || name.includes("电脑")) return "fas fa-laptop";
   if (code.includes("tablet") || code.includes("pad") || name.includes("平板")) return "fas fa-tablet-alt";
@@ -88,6 +120,12 @@ function iconClass(c: Category) {
   if (code.includes("audio") || code.includes("headphone") || name.includes("耳机") || name.includes("音箱")) return "fas fa-headphones";
   if (code.includes("console") || name.includes("游戏") || name.includes("主机")) return "fas fa-gamepad";
   if (code.includes("accessory") || name.includes("配件")) return "fas fa-plug";
+  if (code.includes("clean") || code.includes("cleaning") || name.includes("清洁")) return "fas fa-broom";
+  if (code.includes("sofa") || name.includes("沙发")) return "fas fa-couch";
+  if (code.includes("bed") || name.includes("床")) return "fas fa-bed";
+  if (code.includes("jewel") || code.includes("jewelry") || name.includes("珠宝")) return "fas fa-gem";
+  if (code.includes("pet") || code.includes("pets") || name.includes("宠物")) return "fas fa-paw";
+  if (code.includes("hardware") || name.includes("五金")) return "fas fa-tools";
   return "fas fa-tag";
 }
 </script>
@@ -174,18 +212,24 @@ function iconClass(c: Category) {
       </div>
     </div>
 
-    <!-- 底部操作区 -->
-    <div class="flex flex-col items-center gap-4 pb-10">
-      <button
-        @click="onEnter"
-        class="bg-white border-2 border-orange-200 text-gray-700 font-extrabold py-3 px-10 rounded-full shadow-md hover:bg-orange-50 hover:scale-105 active:scale-95 transition-all disabled:opacity-60 disabled:cursor-not-allowed"
-        :disabled="!selectedCategory"
-      >
-        {{ enterText }}
-      </button>
+    <div class="h-20"></div>
 
-      <div v-if="selectedCategory" class="text-xs text-slate-500 text-center">
-        当前选择：<span class="font-bold text-slate-700">{{ selectedCategory.name }}</span>
+    <!-- 悬浮操作栏 -->
+    <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-30 w-[min(560px,calc(100%-24px))]">
+      <div
+        class="bg-white/80 backdrop-blur-md border border-orange-200 rounded-2xl shadow-lg px-4 py-3 flex items-center gap-3 justify-between"
+      >
+        <div class="text-xs text-slate-600 truncate">
+          当前选择：<span class="font-bold text-slate-800">{{ selectedCategory?.name || '未选择' }}</span>
+        </div>
+
+        <button
+          @click="onEnter"
+          class="bg-white border-2 border-orange-200 text-gray-700 font-extrabold py-2.5 px-6 rounded-full shadow-md hover:bg-orange-50 hover:scale-105 active:scale-95 transition-all disabled:opacity-60 disabled:cursor-not-allowed shrink-0"
+          :disabled="!selectedCategory"
+        >
+          {{ enterText }}
+        </button>
       </div>
     </div>
   </div>

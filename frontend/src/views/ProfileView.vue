@@ -43,8 +43,8 @@
           <!-- Info -->
           <div class="md:col-span-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <InfoItem label="学号" :value="profile.username || '-'" />
-              <InfoItem label="学校" :value="profile.school || '-'" />
+              <InfoItem label="学号/社区号" :value="profile.username || '-'" />
+              <InfoItem label="学校/小区" :value="profile.school || '-'" />
               <InfoItem label="昵称" :value="profile.nickname || '-'" />
               <InfoItem label="邮箱" :value="profile.email || '-'" />
               <InfoItem label="手机号" :value="profile.phone || '-'" />

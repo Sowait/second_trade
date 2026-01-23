@@ -19,7 +19,7 @@
               <input
                 v-model="studentId"
                 type="text"
-                placeholder="学号"
+                placeholder="学号/社区号"
                 class="w-full border-2 border-slate-900/10 bg-light-3 rounded-2xl pl-10 pr-4 py-3.5 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition"
               />
             </div>
@@ -63,7 +63,7 @@ const loading = ref(false);
 
 async function onSubmit() {
   if (!studentId.value || !password.value) {
-    alert("请输入学号和密码");
+    alert("请输入学号/社区号和密码");
     return;
   }
   loading.value = true;

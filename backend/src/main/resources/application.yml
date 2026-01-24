@@ -19,6 +19,11 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
 
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 25MB
+
 app:
   jwt:
     secret: ${JWT_SECRET:second-trade-dev-secret}

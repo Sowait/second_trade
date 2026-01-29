@@ -1,7 +1,7 @@
 <template>
   <div class="bg-white/65 backdrop-blur-xl border border-light-2/80 rounded-2xl shadow-card p-5 mb-6">
     <div class="flex flex-wrap gap-4">
-      <div class="w-full md:w-auto">
+      <div v-if="showBrand" class="w-full md:w-auto">
         <label class="block text-sm font-medium text-dark-2 mb-1">品牌</label>
         <div class="relative">
           <select v-model="m.brand" class="w-full md:w-44 appearance-none bg-white/70 backdrop-blur border border-light-2/80 rounded-xl px-4 py-2.5 pr-9 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary">
@@ -65,5 +65,7 @@
 </template>
 
 <script setup lang="ts">
+withDefaults(defineProps<{ showBrand?: boolean }>(), { showBrand: true });
+
 const m = defineModel<any>({ required: true });
 </script>

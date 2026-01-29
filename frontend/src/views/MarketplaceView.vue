@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <FilterBar v-model="filters" />
+      <FilterBar v-model="filters" :show-brand="false" />
 
       <div v-if="errorMsg" class="mb-3 text-sm text-red-600">{{ errorMsg }}</div>
       <div v-else-if="loading" class="mb-3 text-sm text-neutral-500">加载中...</div>

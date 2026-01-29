@@ -270,16 +270,6 @@ const defaultTitle = computed(() => {
   return parts.join(" ").trim();
 });
 
-const estimateHint = computed(() => {
-  const r = estimateRes.value || publishRes.value;
-  if (!r) return null;
-  const min = r.estimated_min ?? null;
-  const max = r.estimated_max ?? null;
-  const mid = r.estimated_mid ?? null;
-  if (min == null && max == null && mid == null) return null;
-  return { min: String(min ?? ""), max: String(max ?? ""), mid: mid != null ? String(mid) : null };
-});
-
 // ---------- utils ----------
 function setError(msg: string) {
   errorMsg.value = msg;
@@ -877,9 +867,6 @@ watch(
           <div>
             <label class="block text-sm text-gray-600 mb-1 flex items-center justify-between">
               <span>售价 selling_price</span>
-              <span v-if="estimateHint" class="text-xs text-gray-500">
-                估价：{{ estimateHint.min ?? '-' }} ~ {{ estimateHint.max ?? '-' }}<span v-if="estimateHint.mid">（中位 {{ estimateHint.mid }}）</span>
-              </span>
             </label>
             <input
               v-model="form3.selling_price"
